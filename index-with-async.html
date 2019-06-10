@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Coding Train: Data/APIs 1</title>
+    </head>
+    <body>
+        <img src="" id="rainbow" width=480/> <!--here we have an image dom element with the id Rainbow-->
+        <script>
+            // we have written an aysnc function that makes the fetch request
+            // after returning the fetch request, it takes the datastream and turns it into a blob
+            // it converts that blob into the format that DOM element expects
+            // and links it to the src
+            // we also have a message that outputs to the console to say that it works
+            // and if there are any error messages, we can return them
+            console.log('about to fetch a rainbow');
+            catchRainbow()
+            .then(response => {
+                console.log('yay!');
+            })
+            .catch(error => {
+                console.log("error!");
+                console.error(error);
+            });
+
+            // use async to have a function that happens 'asynchronously' - no need to use fetch and then
+            // this allows us to use 'await'
+            async function catchRainbow() {
+                // so instead of using '.then', we can set it to a variable
+                // since fetch is asynchronous, need to use await
+                // so... await the response of fetch and store in this variable
+                const response = await fetch('rainbow.jpg');
+                // can do the same with for turning the response into blob
+                const blob = await response.blob();
+                // now link it to the source...
+                // link the blob to image src dom attribute - currently it is blank with ""
+                // data blob will not be in format that image dom expects so need to use URL package
+                // and convert the blob - look at MDN web docs
+                document.getElementById('rainbow').src = URL.createObjectURL(blob);
+            }
+
+
+
+        </script>
+    </body>
+</html>
